@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'new-ng-app';
+  show = false;
+  currentInstanceNumber = 0;
+
+  clicked() {
+    this.show = !this.show;
+    if (this.show)
+      this.currentInstanceNumber = this.currentInstanceNumber + 1;
+  }
 }
