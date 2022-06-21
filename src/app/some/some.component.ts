@@ -15,7 +15,7 @@ export class SomeComponent implements OnInit, OnDestroy {
   subscription2: Subscription | undefined;
   x2: number | undefined;
 
-  subscriptions: Subscription[] = []
+  parentSubscription = new Subscription;
 
   constructor() { }
 
@@ -24,17 +24,17 @@ export class SomeComponent implements OnInit, OnDestroy {
       this.x1 = x;
       console.log(this.instanceNumber + " - 1 - " + this.x1);
     });
-    this.subscriptions.push(this.subscription1);
+    this.parentSubscription.add(this.subscription1);
 
     this.subscription2 = interval(100).subscribe(x => {
       this.x2 = x;
-      console.log(this.instanceNumber +" - 2 - " + this.x2);
+      console.log(this.instanceNumber + " - 2 - " + this.x2);
     });
-    this.subscriptions.push(this.subscription2);
+    this.parentSubscription.add(this.subscription2);
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-    console.log("subscriptions unsubscribed");   
+    this.parentSubscription.unsubscribe();
+    console.log("subscriptions unsubscribed");
   }
 }
